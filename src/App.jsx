@@ -50,16 +50,24 @@ function App() {
       <h1>25 + 5 clock</h1>
       <div className="options">
         <div className="option">
-          <h3>break length</h3>
+          <h3 id="break-label">Break Length</h3>
           <div className="row">
             <button
+              id="break-increment"
               className="btn btn-light col"
-              onClick={() => setBreakLength(breakLength + 1)}
+              onClick={() =>
+                setBreakLength(
+                  breakLength >= 60 ? breakLength : breakLength + 1
+                )
+              }
             >
               <HiArrowUp />
             </button>
-            <h3 className="col">{breakLength}</h3>
+            <h3 className="col" id="break-length">
+              {breakLength}
+            </h3>
             <button
+              id="break-decrement"
               className="btn btn-light col"
               onClick={() =>
                 setBreakLength(breakLength <= 1 ? breakLength : breakLength - 1)
@@ -70,25 +78,35 @@ function App() {
           </div>
         </div>
         <div className="option">
-          <h3>session length</h3>
+          <h3 id="session-label">Session Length</h3>
           <div className="row">
             <button
+              id="session-increment"
               className="btn btn-light col"
               onClick={() => {
-                setSessionLength(sessionLength + 1);
-                setSessionTime((sessionLength + 1) * 60);
+                setSessionLength(
+                  sessionLength >= 60 ? sessionLength : sessionLength + 1
+                );
+                setSessionTime(
+                  (sessionLength >= 60 ? sessionLength : sessionLength + 1) * 60
+                );
               }}
             >
               <HiArrowUp />
             </button>
-            <h3 className="col">{sessionLength}</h3>
+            <h3 id="session-length" className="col">
+              {sessionLength}
+            </h3>
             <button
+              id="session-decrement"
               className="btn btn-light col"
               onClick={() => {
                 setSessionLength(
                   sessionLength <= 1 ? sessionLength : sessionLength - 1
                 );
-                setSessionTime((sessionLength - 1) * 60);
+                setSessionTime(
+                  (sessionLength <= 1 ? sessionLength : sessionLength - 1) * 60
+                );
               }}
             >
               <HiArrowDown />
@@ -97,16 +115,21 @@ function App() {
         </div>
       </div>
       <div className="border border-light rounded p-3 m-3">
-        <h3>{isBreak ? "break" : "session"}</h3>
+        <h3 id="timer-label">{isBreak ? "break" : "session"}</h3>
         <div
+          id="time-left"
           className={`h1 ${sessionTime < 60 && "text-danger"}`}
         >{`${Math.floor(sessionTime / 60)}:${sessionTime % 60}`}</div>
       </div>
       <div className="control d-flex align-items-center justify-content-center gap-3">
-        <button className="btn btn-light" onClick={startStopClock}>
+        <button
+          id="start_stop"
+          className="btn btn-light"
+          onClick={startStopClock}
+        >
           <HiOutlinePlay />|<HiOutlinePause />
         </button>
-        <button className="btn btn-light" onClick={resetClock}>
+        <button id="reset" className="btn btn-light" onClick={resetClock}>
           <HiRefresh />
         </button>
       </div>
